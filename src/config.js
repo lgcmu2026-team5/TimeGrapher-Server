@@ -5,7 +5,7 @@ const DEFAULTS = {
   port: 8787,
   maxLogChars: 20000,
   maxBodyBytes: 65536,
-  maxOutputTokens: 700,
+  maxOutputTokens: 4096,
   rateLimitPerMinute: 3,
   rateLimitPerDay: 30,
   globalDailyLimit: 500,
