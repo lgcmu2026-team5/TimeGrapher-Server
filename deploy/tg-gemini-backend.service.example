@@ -1,0 +1,19 @@
+[Unit]
+Description=TimeGrapher Gemini Backend
+After=network-online.target
+Wants=network-online.target
+
+[Service]
+Type=simple
+User=jaehong5
+Group=jaehong5
+WorkingDirectory=/home/jaehong5/tg-gemini
+EnvironmentFile=/etc/tg-gemini-backend.env
+ExecStart=/home/jaehong5/.nvm/versions/node/v24.13.1/bin/node /home/jaehong5/tg-gemini/src/server.js
+Restart=on-failure
+RestartSec=5
+NoNewPrivileges=true
+PrivateTmp=true
+
+[Install]
+WantedBy=multi-user.target

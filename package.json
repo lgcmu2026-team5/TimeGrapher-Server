@@ -1,0 +1,14 @@
+{
+  "name": "tg-gemini-backend",
+  "version": "0.1.0",
+  "private": true,
+  "type": "module",
+  "description": "Private Gemini backend for TimeGrapher AI explanations.",
+  "scripts": {
+    "start": "node src/server.js",
+    "test": "node --test"
+  },
+  "engines": {
+    "node": ">=20"
+  }
+}

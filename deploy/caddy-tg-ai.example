@@ -1,0 +1,9 @@
+tg-ai.jaehongoh.com:80 {
+	redir https://tg-ai.jaehongoh.com{uri} 301
+}
+
+tg-ai.jaehongoh.com:443 {
+	tls /etc/letsencrypt/live/tg-ai.jaehongoh.com/fullchain.pem /etc/letsencrypt/live/tg-ai.jaehongoh.com/privkey.pem
+	encode zstd gzip
+	reverse_proxy 127.0.0.1:8787
+}
