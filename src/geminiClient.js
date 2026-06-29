@@ -61,6 +61,9 @@ export function createGeminiClient(config, fetchImpl = globalThis.fetch) {
         if (error instanceof GeminiConfigError || error instanceof GeminiUpstreamError) {
           throw error;
         }
+        if (error?.name === 'AbortError') {
+          throw new GeminiUpstreamError('Gemini upstream request timed out.', 504);
+        }
 
         throw new GeminiUpstreamError('Gemini upstream request failed.');
       } finally {

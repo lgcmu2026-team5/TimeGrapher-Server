@@ -175,6 +175,23 @@ test('Gemini upstream failure returns safe 502', async () => {
   await app.close();
 });
 
+test('Gemini upstream timeout returns safe 504', async () => {
+  const app = await startTestApp({
+    geminiClient: {
+      explain: async () => {
+        throw new GeminiUpstreamError('raw timeout detail', 504);
+      }
+    }
+  });
+  const response = await postExplain(app.baseUrl);
+  const body = await response.json();
+
+  assert.equal(response.status, 504);
+  assert.equal(body.error, 'gemini_upstream_timeout');
+  assert.doesNotMatch(body.message, /raw timeout detail/);
+  await app.close();
+});
+
 async function startTestApp({ env = {}, geminiClient } = {}) {
   const config = readConfig({ ...BASE_ENV, ...env });
   const server = createApp({

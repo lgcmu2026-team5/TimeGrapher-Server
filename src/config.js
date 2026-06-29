@@ -9,7 +9,7 @@ const DEFAULTS = {
   rateLimitPerMinute: 3,
   rateLimitPerDay: 30,
   globalDailyLimit: 500,
-  upstreamTimeoutMs: 15000,
+  upstreamTimeoutMs: 60000,
   trustProxy: false,
   geminiEndpoint: 'https://generativelanguage.googleapis.com/v1beta/interactions'
 };

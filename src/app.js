@@ -118,10 +118,13 @@ export function createApp(options = {}) {
       }
 
       if (error instanceof GeminiUpstreamError) {
-        sendJson(response, 502, {
+        const statusCode = error.statusCode === 504 ? 504 : 502;
+        sendJson(response, statusCode, {
           requestId,
-          error: 'gemini_upstream_failed',
-          message: 'AI explanation service failed upstream.'
+          error: statusCode === 504 ? 'gemini_upstream_timeout' : 'gemini_upstream_failed',
+          message: statusCode === 504
+            ? 'AI explanation service timed out upstream.'
+            : 'AI explanation service failed upstream.'
         });
         return;
       }

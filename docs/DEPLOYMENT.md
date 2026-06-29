@@ -54,9 +54,14 @@ MAX_OUTPUT_TOKENS=4096
 RATE_LIMIT_PER_MINUTE=3
 RATE_LIMIT_PER_DAY=30
 GLOBAL_DAILY_LIMIT=500
-UPSTREAM_TIMEOUT_MS=15000
+UPSTREAM_TIMEOUT_MS=60000
 TRUST_PROXY=true
 ```
+
+`UPSTREAM_TIMEOUT_MS` is intentionally longer than the app request path's
+default UI wait: full CSV logs can take more than 15 seconds to generate a
+Gemini response, and a shorter timeout returns `504 gemini_upstream_timeout`
+before Gemini finishes.
 
 Required secrets:
 
