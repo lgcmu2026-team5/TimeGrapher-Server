@@ -1,4 +1,5 @@
 import assert from 'node:assert/strict';
+import { readFile } from 'node:fs/promises';
 import test from 'node:test';
 import { createApp } from '../src/app.js';
 import { readConfig } from '../src/config.js';
@@ -155,6 +156,44 @@ test('valid request returns explanation from Gemini client', async () => {
   assert.equal(response.status, 200);
   assert.equal(body.explanation, '테스트 설명입니다.');
   assert.equal(body.model, 'gemini-test');
+  await app.close();
+});
+
+test('sample CSV fixture is accepted and forwarded to Gemini prompt', async () => {
+  const sampleLog = await readFile(
+    new URL('../samples/20260628_165622_9525729.csv', import.meta.url),
+    'utf8'
+  );
+  let seenPrompt;
+  const app = await startTestApp({
+    env: {
+      MAX_BODY_BYTES: '262144',
+      MAX_LOG_CHARS: '100000'
+    },
+    geminiClient: {
+      explain: async (prompt) => {
+        seenPrompt = prompt;
+        return { explanation: '샘플 CSV 분석입니다.', model: 'gemini-test' };
+      }
+    }
+  });
+
+  const response = await postExplain(app.baseUrl, {
+    logText: sampleLog,
+    measurementSummary: {
+      bph: 21600,
+      amplitudeDegrees: 212.358931
+    }
+  });
+  const body = await response.json();
+
+  assert.equal(response.status, 200);
+  assert.equal(body.explanation, '샘플 CSV 분석입니다.');
+  assert.match(seenPrompt.systemPrompt, /timegrapher log analyst/);
+  assert.match(seenPrompt.userContent, /BEGIN TIMEGRAPHER LOG/);
+  assert.match(seenPrompt.userContent, /lift_angle_deg,52\.000000/);
+  assert.match(seenPrompt.userContent, /session_id,source_id,history_version/);
+  assert.ok(seenPrompt.userContent.includes(sampleLog));
   await app.close();
 });
 
