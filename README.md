@@ -35,7 +35,7 @@ curl -fsS https://tg-ai.jaehongoh.com/health
 AWS Learner Lab:
 
 ```bash
-ssh -i ~/.ssh/labsuser.pem ubuntu@<EC2_ELASTIC_IP>
+ssh -i ~/.ssh/labsuser.pem ubuntu@tg-ai-cmu-aws.jaehongoh.com
 cd ~/tg-gemini
 git pull
 sudo systemctl restart tg-gemini-backend
@@ -100,8 +100,8 @@ Current demo limits:
 ```text
 MAX_LOG_CHARS=100000
 MAX_BODY_BYTES=262144
-MAX_OUTPUT_TOKENS=4096
-UPSTREAM_TIMEOUT_MS=60000
+MAX_OUTPUT_TOKENS=16384
+UPSTREAM_TIMEOUT_MS=120000
 RATE_LIMIT_PER_MINUTE=3
 RATE_LIMIT_PER_DAY=30
 GLOBAL_DAILY_LIMIT=500

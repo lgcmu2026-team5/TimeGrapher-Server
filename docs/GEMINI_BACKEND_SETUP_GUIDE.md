@@ -80,7 +80,7 @@ DEMO_USERNAME=<grader demo username>
 DEMO_PASSWORD=<grader demo password stored as a platform secret>
 MAX_LOG_CHARS=100000
 MAX_BODY_BYTES=262144
-MAX_OUTPUT_TOKENS=4096
+MAX_OUTPUT_TOKENS=16384
 RATE_LIMIT_PER_MINUTE=3
 RATE_LIMIT_PER_DAY=30
 GLOBAL_DAILY_LIMIT=500
@@ -296,7 +296,7 @@ Server requirements:
 - Do not let the client provide arbitrary task instructions.
 - Do not include server secrets or environment values in the prompt.
 - Keep `temperature` low, for example `0.2`.
-- Keep `max_output_tokens` fixed by the server, for example `4096` for the current full-log demo deployment.
+- Keep `max_output_tokens` fixed by the server, for example `16384` for the current full-log demo deployment.
 
 ## 10. Gemini call
 
@@ -331,7 +331,7 @@ Body shape:
   "store": false,
   "generation_config": {
     "temperature": 0.2,
-    "max_output_tokens": 4096
+    "max_output_tokens": 16384
   }
 }
 ```

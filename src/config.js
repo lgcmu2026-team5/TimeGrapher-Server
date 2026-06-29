@@ -5,11 +5,11 @@ const DEFAULTS = {
   port: 8787,
   maxLogChars: 20000,
   maxBodyBytes: 65536,
-  maxOutputTokens: 4096,
+  maxOutputTokens: 16384,
   rateLimitPerMinute: 3,
   rateLimitPerDay: 30,
   globalDailyLimit: 500,
-  upstreamTimeoutMs: 60000,
+  upstreamTimeoutMs: 120000,
   trustProxy: false,
   geminiEndpoint: 'https://generativelanguage.googleapis.com/v1beta/interactions'
 };

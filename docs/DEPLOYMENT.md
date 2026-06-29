@@ -50,11 +50,11 @@ HOST=127.0.0.1
 PORT=8787
 MAX_LOG_CHARS=100000
 MAX_BODY_BYTES=262144
-MAX_OUTPUT_TOKENS=4096
+MAX_OUTPUT_TOKENS=16384
 RATE_LIMIT_PER_MINUTE=3
 RATE_LIMIT_PER_DAY=30
 GLOBAL_DAILY_LIMIT=500
-UPSTREAM_TIMEOUT_MS=60000
+UPSTREAM_TIMEOUT_MS=120000
 TRUST_PROXY=true
 ```
 
@@ -327,7 +327,7 @@ sudo /home/jaehong5/.nvm/versions/node/v24.13.1/bin/node \
 Authenticated smoke test, AWS server:
 
 ```bash
-ssh -i ~/.ssh/labsuser.pem ubuntu@<EC2_ELASTIC_IP> \
+ssh -i ~/.ssh/labsuser.pem ubuntu@tg-ai-cmu-aws.jaehongoh.com \
   'cd ~/tg-gemini && sudo /usr/bin/node scripts/smoke-auth.js /etc/tg-gemini-backend.env https://tg-ai-cmu-aws.jaehongoh.com'
 ```
 
