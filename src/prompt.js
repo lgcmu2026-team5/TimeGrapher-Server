@@ -1,5 +1,5 @@
 const SYSTEM_PROMPT = `You are a conservative mechanical watch timegrapher log analyst.
-Output in Korean.
+Output in English.
 Parse the log exactly.
 Do not overdiagnose.
 Treat short single-position measurements as limited evidence.
@@ -22,7 +22,7 @@ export function buildPrompt({ locale, logText, measurementSummary }) {
     systemPrompt: SYSTEM_PROMPT,
     userContent: `다음은 기계식 시계 timegrapher 로그다.
 
-Requested locale: ${sanitizeShortText(locale || 'ko-KR', 20)}
+Requested locale: ${sanitizeShortText(locale || 'en-US', 20)}
 
 Measurement summary:
 ${renderMeasurementSummary(measurementSummary)}
@@ -38,16 +38,21 @@ ${renderMeasurementSummary(measurementSummary)}
 - 한 자세/짧은 측정이면 결론을 보수적으로 낸다.
 
 출력:
-- Markdown 형식으로 작성한다. 제목은 ###, 목록은 - 또는 1. 형식을 사용한다.
-- 반드시 완결된 한국어 답변으로 끝낸다. 중간에 표나 문장이 끊기지 않게 한다.
+- Markdown 형식으로 작성한다. 제목(heading)은 '## ', 목록은 - 또는 1. 형식을 사용한다.
+- 반드시 완결된 영어 답변으로 끝낸다. 중간에 표나 문장이 끊기지 않게 한다.
 - 전체 길이는 900~1400자 정도로 제한한다.
 - 긴 원자료 표, 행별 목록, 넓은 Markdown 표는 만들지 않는다.
-- 아래 5개 항목만 쓴다.
-1. 한 줄 결론
-2. 핵심 수치 요약: rate, amplitude, beat error, BPH를 짧은 bullet로 정리
-3. 관찰된 이상 징후: 부호반전, 큰 점프, missed/sync 문제가 있으면 최대 4개 bullet
-4. 신뢰도와 한계: 단일 자세/짧은 측정이면 보수적으로 설명
-5. 권장 조치: 조정 또는 재측정 제안
+- 아래 5개 항목만 쓴다. 각 항목의 제목은 반드시 '## ' heading으로 시작해 크게 표시하고, 세부 내용은 그 제목 아래에 bullet로 정리한다. 제목 줄에는 부가 설명을 넣지 않는다.
+## 1. Conclusion
+- 한 줄 결론
+## 2. Key figures
+- rate, amplitude, beat error, BPH를 짧은 bullet로 정리
+## 3. Anomalies observed
+- 부호반전, 큰 점프, missed/sync 문제가 있으면 최대 4개 bullet
+## 4. Confidence and limits
+- 단일 자세/짧은 측정이면 보수적으로 설명
+## 5. Recommended actions
+- 조정 또는 재측정 제안
 
 로그:
 [LOG]
@@ -77,7 +82,7 @@ export function normalizeRequestBody(body, maxLogChars) {
   return {
     ok: true,
     value: {
-      locale: sanitizeShortText(body.locale || 'ko-KR', 20),
+      locale: sanitizeShortText(body.locale || 'en-US', 20),
       appVersion: sanitizeShortText(body.appVersion || '', 100),
       logText: body.logText,
       measurementSummary: normalizeMeasurementSummary(body.measurementSummary)
