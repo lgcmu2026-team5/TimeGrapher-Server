@@ -42,11 +42,13 @@ ${renderMeasurementSummary(measurementSummary)}
 - 반드시 완결된 영어 답변으로 끝낸다. 중간에 표나 문장이 끊기지 않게 한다.
 - 전체 길이는 900~1400자 정도로 제한한다.
 - 긴 원자료 표, 행별 목록, 넓은 Markdown 표는 만들지 않는다.
-- 아래 5개 항목만 쓴다. 각 항목의 제목은 반드시 '## ' heading으로 시작해 크게 표시하고, 세부 내용은 그 제목 아래에 bullet로 정리한다. 제목 줄에는 부가 설명을 넣지 않는다.
+- 아래 5개 항목만 쓴다. 각 항목의 제목은 반드시 '## ' heading으로 시작해 크게 표시한다. 제목 줄에는 부가 설명을 넣지 않는다.
 ## 1. Conclusion
 - 한 줄 결론
 ## 2. Key figures
-- rate, amplitude, beat error, BPH를 짧은 bullet로 정리
+- rate, amplitude, beat error, BPH를 compact Markdown table로 정리한다.
+- table column은 Metric, Value, Note만 사용한다.
+- 수치가 없으면 Value에 "Not provided"라고 쓴다.
 ## 3. Anomalies observed
 - 부호반전, 큰 점프, missed/sync 문제가 있으면 최대 4개 bullet
 ## 4. Confidence and limits
